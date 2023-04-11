@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import json
+import os
 
 app = Flask(__name__)
 
@@ -8,18 +9,17 @@ class User:
         self.username = username
         self.password = password
         self.email = email
+        self.create_creds()
+
+    def create_creds(self):
+        if not os.path.exists("creds.csv"):
+            with open("creds.csv", "w+") as f:
+                f.write("username,password,email\n")
 
     def save_details(self):
-        data = {
-            "user" : self.username,
-            "password": self.password,
-            "email": self.email
-        }
-        with open("creds.json", "a") as f:
-            # Write the JSON object to the file
-            json.dump(data, f)
-            # Add a newline character to separate the objects
-            f.write('\n')
+        data = self.username + "," + self.password + "," + self.email + "\n"
+        with open("creds.csv", "a") as f:
+            f.write(data)
         
 @app.route('/register', methods=['GET', 'POST'])
 def register():
