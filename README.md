@@ -1,3 +1,3 @@
 # password_management_tool
 
- A Password Management Tool for Enhancing Software Developer Productivity.
+ A basic Password Management Chrome Extension developed usign Flask, HTML and CSS.
